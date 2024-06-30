@@ -56,6 +56,7 @@ func handleRequest(conn net.Conn) {
 			fmt.Println("Error reading data:", err)
 			return
 		}
+		fmt.Printf("input: %v", message)
 
 		var input Input
 		err = json.Unmarshal([]byte(message), &input)
@@ -97,6 +98,7 @@ func handleRequest(conn net.Conn) {
 			return
 		}
 		o = append(o, byte('\n'))
+		fmt.Printf("output: %s\n", string(o))
 		conn.Write(o)
 	}
 }
