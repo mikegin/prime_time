@@ -64,14 +64,15 @@ func handleRequest(conn net.Conn) {
 			return
 		}
 
-		var output Output
-		output.Method = "isPrime"
+		output := Output{
+			Method: "isPrime",
+			Prime:  false,
+		}
+
 		inputIntNumber := int(input.Number)
 		hasDecimalValues := float64(inputIntNumber)-input.Number != 0
 
-		if hasDecimalValues {
-			output.Prime = false
-		} else {
+		if !hasDecimalValues {
 			output.Prime = isPrime(inputIntNumber)
 		}
 
