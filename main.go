@@ -73,12 +73,14 @@ func handleRequest(conn net.Conn) {
 		err = json.Unmarshal(input.Number, &number)
 		if err != nil {
 			fmt.Println("Error unmarshaling input.number:", err)
+			return
 		}
 
 		var method string
 		err = json.Unmarshal(input.Method, &method)
 		if err != nil {
 			fmt.Println("Error unmarshaling input.method:", err)
+			return
 		}
 
 		output := Output{
