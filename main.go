@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"math"
 	"net"
@@ -53,7 +54,9 @@ func handleRequest(conn net.Conn) {
 	for {
 		message, err := reader.ReadString('\n')
 		if err != nil {
-			fmt.Println("Error reading data:", err)
+			if err != io.EOF {
+				log.Printf("Error reading from connection: %s", err)
+			}
 			return
 		}
 		fmt.Printf("input: %v", message)
