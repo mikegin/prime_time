@@ -85,7 +85,7 @@ func handleRequest(conn net.Conn) {
 			Prime:  false,
 		}
 
-		if number < 0 || float64(int(number))-number != 0 { // if less than zero or has decimal values assume is prime
+		if float64(int(number))-number != 0 { // if less than zero or has decimal values assume is prime
 			output.Prime = true
 		} else {
 			output.Prime = isPrime(int(number))
