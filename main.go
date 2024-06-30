@@ -83,8 +83,6 @@ func handleRequest(conn net.Conn) {
 		}
 		o = append(o, byte('\n'))
 		conn.Write(o)
-
-		fmt.Printf("Received: %v\n", input)
 	}
 }
 
