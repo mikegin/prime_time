@@ -82,6 +82,10 @@ func handleRequest(conn net.Conn) {
 			fmt.Println("Error unmarshaling input.method:", err)
 			return
 		}
+		if method != "isPrime" {
+			fmt.Println("Incorrect method:", method)
+			return
+		}
 
 		output := Output{
 			Method: "isPrime",
