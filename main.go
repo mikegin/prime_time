@@ -72,6 +72,7 @@ func handleRequest(conn net.Conn) {
 		inputIntNumber := int(input.Number)
 		hasDecimalValues := float64(inputIntNumber)-input.Number != 0
 
+		fmt.Printf("hasDecimalValues = %v", hasDecimalValues)
 		if !hasDecimalValues {
 			output.Prime = isPrime(inputIntNumber)
 		}
@@ -87,7 +88,7 @@ func handleRequest(conn net.Conn) {
 }
 
 func isPrime(value int) bool {
-	for i := 2; i <= int(math.Floor(math.Sqrt(float64(value))/2)); i++ {
+	for i := 2; i <= int(math.Floor(math.Sqrt(float64(value)))); i++ {
 		if value%i == 0 {
 			return false
 		}
