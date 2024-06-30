@@ -16,8 +16,8 @@ const (
 )
 
 type Input struct {
-	Method string  `json:"method"`
-	Number float64 `json:"number"`
+	Method json.RawMessage `json:"method"`
+	Number json.RawMessage `json:"number"`
 }
 
 type Output struct {
@@ -64,17 +64,31 @@ func handleRequest(conn net.Conn) {
 			return
 		}
 
+		if input.Method == nil || input.Number == nil {
+			return
+		}
+
+		var number float64
+		err = json.Unmarshal(input.Number, &number)
+		if err != nil {
+			fmt.Println("Error unmarshaling input.number:", err)
+		}
+
+		var method string
+		err = json.Unmarshal(input.Method, &method)
+		if err != nil {
+			fmt.Println("Error unmarshaling input.method:", err)
+		}
+
 		output := Output{
 			Method: "isPrime",
 			Prime:  false,
 		}
 
-		inputIntNumber := int(input.Number)
-		hasDecimalValues := float64(inputIntNumber)-input.Number != 0
-
-		fmt.Printf("hasDecimalValues = %v", hasDecimalValues)
-		if !hasDecimalValues {
-			output.Prime = isPrime(inputIntNumber)
+		if number < 0 || float64(int(number))-number != 0 { // if less than zero or has decimal values assume is prime
+			output.Prime = true
+		} else {
+			output.Prime = isPrime(int(number))
 		}
 
 		o, err := json.Marshal(output)
